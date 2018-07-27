@@ -9,7 +9,13 @@ session_start();
 session_set_cookie_params(3600);
 error_reporting(E_ERROR | E_PARSE);
 // Change the page password!!
-$passw="*password";
+$passw="password";
+
+If ( isset($_GET['action']) &&  $_GET['action']=="logout") {
+    session_unset();
+    session_destroy();
+    goUrl( $_SERVER['PHP_SELF'] );exit;
+}
 
 
 $v="Display";
@@ -359,7 +365,7 @@ if (!isset($_SESSION['DSdashboard']) ) {
 
 If ($ok) {
 
-echo '<a href="logout.php">click here to log out</a><br>';
+echo '<a href="'. $_SERVER['PHP_SELF'].'?action=logout";>click here to log out</a><br>';
 
 combineCSVfiles(); // First step Combine files to create single log file
 echo summarize() ;   // Display Graph
